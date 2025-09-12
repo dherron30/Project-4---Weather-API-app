@@ -1,7 +1,9 @@
 import express from "express";
-import axios from "axios";
+import axios from "axios"; 
+import dotenv from 'dotenv';
 
-
+//Load environment variables from the .env file
+dotenv.config();
 // Create an express app and set the port number
 const app = express();
 const port = 3000;
@@ -14,7 +16,7 @@ app.use(express.static("public"));
 
 // Define your OpenWeatherMap API key and URL
 
-const apiKey = "301815d01a86a6b7ba2eb3f06b1a2447";
+const apiKey = process.env.API_KEY;
 const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 app.get("/", async (req, res) => {
@@ -22,13 +24,31 @@ app.get("/", async (req, res) => {
   let weatherData = null;
   let errorMessage = null;
 
-  try {
-    const response = await axios.get(`${apiURL}${city}&appid=${apiKey}`);
-    weatherData = response.data;
-  } catch (error) {
-    errorMessage = "Couldn't fetch weather data. Please check the city name.";
-    console.error(error.response?.data || error.message);
+  //Check for missing API key
+  if (!apiKey) {
+    return res.render("index", {
+      weatherData: null,
+      city,
+      errorMessage: "API key is missing. Please set it in the .env file"
+    });
   }
+
+   try {
+        const response = await axios.get(`${apiURL}${city}&appid=${apiKey}`);
+        weatherData = response.data;
+    } catch (error) {
+      //Hnalde specific errors
+      if (error.response){
+        if (error.repsonse.status === 404){
+          errorMessage = `City ${city} not found. Pease check the name.`;
+        }
+      }else if (error.repsonse.status ===401){
+        errorMessage = "Invalid API key.";
+      }else {
+        errorMessage = "Network error or server unreachable.";
+      }
+     console.log("API Error:", error.repsonse?.data || error.message);
+    }
 
   res.render("index", {
     weatherData,
