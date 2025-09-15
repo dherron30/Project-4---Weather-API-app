@@ -6,6 +6,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT_2 || 4000;
+const API_URL = process.env.API_URL || "http://localhost:4000";
 const host = "0.0.0.0"; // Required for Render
 
 //  Middleware
