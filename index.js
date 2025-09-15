@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT_2 || 4000;
 const host = "0.0.0.0"; // Required for Render
 
 //  Middleware
