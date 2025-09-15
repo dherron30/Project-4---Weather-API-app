@@ -16,7 +16,7 @@ app.use(express.static("public"));
 
 // Define your OpenWeatherMap API key and URL
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.OPENWEATHER_API_KEY;
 const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 app.get("/", async (req, res) => {
