@@ -1,9 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
+const host = "0.0.0.0"; // Required for Render
 
 //  Middleware
 app.use(cors());
@@ -109,7 +112,8 @@ app.delete("/posts/:id", (req,res) =>{
 // Listen on the port Render provides and host 0.0.0.0
 
 app.listen(port, host, () => {
-  console.log(`API server listening on http://localhost:${port}`);
+  console.log(`API server running on port ${port}`);
+
 });
 
 
