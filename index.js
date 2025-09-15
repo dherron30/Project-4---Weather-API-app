@@ -61,6 +61,18 @@ app.get("/", (req, res) => {
   // or: res.json({ message: "Welcome to API", endpoints: ["/posts", "/posts/:id"] });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).send("API is healthy 🚀");
+});
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to the TEFL Experience API!",
+    endpoints: ["/posts", "/posts/:id", "/posts (POST)", "/posts/:id (PATCH/DELETE)"],
+  });
+});
+
+
 // GET all posts
 app.get("/posts", (req, res) => {
   res.json(posts);
@@ -81,7 +93,8 @@ app.post("/posts", (req, res) => {
     title: req.body.title,
     content: req.body.content,
     author: req.body.author,
-    date: new Date(), // you might format this
+    date: new Date().toISOString().split("T")[0],
+
   };
   posts.push(post);
   res.status(201).json(post);

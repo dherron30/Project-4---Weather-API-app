@@ -5,8 +5,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from 'dotenv';
 
+// Load environment variables
 dotenv.config();
 
+//named variables
 const app = express();
 const port = process.env.PORT || 3000;
 const API_URL = process.env.API_URL || "http://localhost:4000";
@@ -15,12 +17,14 @@ const API_URL = process.env.API_URL || "http://localhost:4000";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-//  Serve static files (e.g., CSS)
+// Serve static files (e.g., CSS)
 app.use(express.static(path.join(__dirname, "public")));
+
+// Set view engine to EJS
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-
-//Middleware
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -48,7 +52,7 @@ app.get("/new", (req, res) => {
 app.get("/edit/:id", async (req, res) => {
   try {
     const response = await axios.get(`${API_URL}/posts/${req.params.id}`);
-    console.log(response.data);
+    //console.log(response.data);
     res.render("update.ejs", {
       heading: "Edit Post",
       submit: "Update Post",
@@ -64,7 +68,7 @@ app.get("/edit/:id", async (req, res) => {
 app.post("/api/posts", async (req, res) => {
   try {
     const response = await axios.post(`${API_URL}/posts`, req.body);
-    console.log(response.data);
+    //console.log(response.data);
     res.redirect("/");
   } catch (error) {
     console.error("Error creating post:", error.message);
@@ -94,6 +98,7 @@ app.get("/api/posts/delete/:id", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Backend server is running on http://localhost:${port}`);
+// Start server
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Frontend running at http://localhost:${port}`);
 });
