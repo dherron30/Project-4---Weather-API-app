@@ -1,24 +1,21 @@
 {
-  "name": "6.1-blog-api-project",
+  "name": "weather-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.4.0",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
+    "axios": "^1.11.0",
     "dotenv": "^17.2.2",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "node": "^24.6.0",
     "nodemon": "^3.1.10"
   }
 }
